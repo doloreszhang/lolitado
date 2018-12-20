@@ -1,4 +1,4 @@
-require './lolitado/accessors'
+require 'accessors'
 
 class DBFactory
   extend Accessors
