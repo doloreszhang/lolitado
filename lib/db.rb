@@ -9,7 +9,7 @@ class DBFactory
     @db = db
   end
 
-  def query sql, waiting_time = 10
+  def query sql
     result = db[sql].all
     return result
   end

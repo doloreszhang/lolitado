@@ -43,3 +43,16 @@ payload['login_type'] = 'login_type'
 payload['social_id'] = 'social_id'
 response = user_login(payload)
 ````
+----
+## How to encrypt/decrypt credential file?
+
+* Initialize Box with secret key of environment variable
+* file_encrypt to encrypt the file
+* file_decrypt to decrypt the file
+
+----
+````ruby
+box = Box.new('CLERIC_ENCRYPT_KEY')
+box.file_encrypt('config/stage.yml')
+box.file_decrypt('config/stage.yml.enc')
+````
