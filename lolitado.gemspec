@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.files = Dir['lib/*.rb']
   s.license = 'MIT'
   s.require_paths = ["lib"]
-  s.add_dependency "mysql2", "~> 0.4"
+  s.add_dependency "mysql2", "= 0.3.21"
   s.add_dependency "sequel", "~> 4.37"
   s.add_dependency "net-ssh-gateway", "~> 1.2"
   s.add_dependency "httparty", "~> 0.14"
