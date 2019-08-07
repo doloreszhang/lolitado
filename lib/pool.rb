@@ -2,7 +2,7 @@ require 'mysql2'
 require 'sequel'
 require 'net/ssh/gateway'
 require 'psych'
-require './lib/db'
+require 'db'
 
 class Pool
 
