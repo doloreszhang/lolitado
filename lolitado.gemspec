@@ -12,10 +12,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/doloreszhang/lolitado"
   s.summary = %q{Lolitado DSL for database process}
   s.description = %q{Lolitado DSL that works with Watir}
-  s.files = [
-    "lib/lolitado.rb",
-    "lib/lolitado/*.rb"
-  ]
+  s.files = `git ls-files`.split("\n")
   s.license = 'MIT'
   s.require_paths = ["lib"]
   s.add_dependency "sequel", "~> 4.37"
