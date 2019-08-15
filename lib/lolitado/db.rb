@@ -59,7 +59,7 @@ module Lolitado
     # @param [Number] waiting_time the default value is 10 that maxium execute duration is 10 second
     def query_empty sql, waiting_time = 10
       result = db[sql].all
-      if result.length != 0
+      if !result.empty?
         if waiting_time != 0
           sleep 1
           result = query(sql, waiting_time - 1)
