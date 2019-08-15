@@ -3,45 +3,56 @@ Library for using database and API
 
 ----
 ## How to call database?
-We use these files to support database fuction:
 
-* assceeors.rb
-* db.rb
-* pool.rb
 
-Besides, you need to do these things：
+You need to do these things：
 
-* put all sql in sql.yml
+* put all sql in sql.yml or in code
 * put database connect info in xx_db.yml
 ----
 run case like
 
 ````ruby
-POOL = Pool.new('lolitado/data/stage_db.yml')
-DBFACTORY = DBFactory.new(POOL.use(:db =>'db_name'))
+pool = Lolitado:Pool.new('xx_db.yml')
+db = pool.use(:db =>'db_name')
 sql = "select * from identity.user where phone = '+86 139 0000 0000"
-result = DBFACTORY.query(sql)
+result = db.query(sql)
 ````
 ----
 ## How to call API?
-
-* We use *request.rb* to process with http requests
-* We use *yaml.rb*  to load api config yml
-* You need to add api.yml to put API config in it
 
 ----
 run case like
 
 ````ruby
-API = Request.new()
-def user_login payload
-API.add_headers({'Content-Type' => "application/json"})
-API.request('https://aaa.aa.com', 'post', '/users/login', payload.to_json)
-end
-payload = {}
-payload['login_type'] = 'login_type'
-payload['social_id'] = 'social_id'
-response = user_login(payload)
+ * Rest API
+  class TestRest
+    include Lolitado
+
+    def initialize
+      base_uri 'https://xxx.com'
+    end
+
+    def get_details_of_a_city city_slug, locale
+      add_headers({'Accept-Language' => locale})
+      request('get', "/cities/#{city_slug}")
+    end
+  end
+
+* Graph API
+  class TestGraph
+    include Lolitado
+
+    def initialize
+      base_uri 'https://xxx.com'
+    end
+
+    def user_login payload
+      add_headers({'Content-Type' => "application/json"})
+      query = "mutation login($input: UserLoginInput!) {userLogin(input:$input) {authToken}}"
+      graph_request(query, payload)
+    end
+  end
 ````
 ----
 ## How to encrypt/decrypt credential file?
@@ -52,7 +63,7 @@ response = user_login(payload)
 
 ----
 ````ruby
-box = Box.new('CLERIC_ENCRYPT_KEY')
-box.file_encrypt('config/stage.yml')
-box.file_decrypt('config/stage.yml.enc')
+box = Lolitado:Box.new('ENV_KEY')
+box.file_encrypt('file_name')
+box.file_decrypt('encrypt_file_name')
 ````
