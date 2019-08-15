@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "version"
+require "lolitado/version"
 
 Gem::Specification.new do |s|
   s.name = "lolitado"
@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/doloreszhang/lolitado"
   s.summary = %q{Lolitado DSL for database process}
   s.description = %q{Lolitado DSL that works with Watir}
-  s.files = Dir['lib/*.rb']
+  s.files = `git ls-files`.split("\n")
   s.license = 'MIT'
   s.require_paths = ["lib"]
   s.add_dependency "sequel", "~> 4.37"
