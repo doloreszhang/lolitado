@@ -33,7 +33,6 @@ require 'lolitado/box'
 #     end
 
 #     def user_login payload
-#       add_headers({'Content-Type' => "application/json"})
 #       query = "mutation login($input: UserLoginInput!) {userLogin(input:$input) {authToken}}"
 #       graph_request(query, payload)
 #     end
@@ -55,9 +54,14 @@ module Lolitado
   # forward graph_request method from Graph class to Graph.request method
   #
   # @param query [String] graph query
+  # @param token [String] authorization token if query needed
+  # @param locale [String] locale if query needed
   # @param variables [String] input variables for graph query using
   #
-  def graph_request query, variables = false
+  def graph_request query, token = false, locale = false, variables = false
+    add_headers({'Content-Type' => "application/json"})
+    add_headers({'Authorization' => "Bearer #{token}"}) if token
+    add_headers({'Accept-Language' => locale}) if locale
     Graph.request(query, variables)
   end
   
