@@ -19,8 +19,7 @@ require 'lolitado/box'
 #     end
 
 #     def get_details_of_a_city city_slug, locale
-#       add_headers({'Accept-Language' => locale})
-#       request('get', "/cities/#{city_slug}")
+#       request('get', "/cities/#{city_slug}", locale)
 #     end
 #   end
 #
@@ -44,9 +43,13 @@ module Lolitado
   # 
   # @param method [String] http request method
   # @param endpoint [String] http request endpoint
+  # @param token [String] authorization token if query needed
+  # @param locale [String] locale if query needed
   # @param body [String] http request body
   #
-  def request method, endpoint, body=false
+  def request method, endpoint, token = false, locale = false, body=false
+    add_headers({'Authorization' => "Bearer #{token}"}) if token
+    add_headers({'Accept-Language' => locale}) if locale
     API.request(method, endpoint, body)
   end
 
