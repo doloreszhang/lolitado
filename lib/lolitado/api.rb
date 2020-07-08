@@ -10,7 +10,9 @@ module Lolitado
     # @param msecs [Float] benchmark for api response time
     #
     def self.format_response response, msecs
-      return {:response => response, :message => response.parsed_response, :status => response.code, :duration => msecs}
+      new_response = {:response => response, :message => response.parsed_response, :status => response.code, :duration => msecs}
+      response_with_hash_key = JSON.parse(JSON[new_response], symbolize_names: true)
+      return response_with_hash_key
     end
     
     #
@@ -98,7 +100,9 @@ module Lolitado
       else
         message = {'errors'=>response.parsed_response}
       end
-      return {:response => response, :message => message, :status => response.code, :duration => msecs}
+      new_response =  {:response => response, :message => message, :status => response.code, :duration => msecs}
+      response_with_hash_key = JSON.parse(JSON[new_response], symbolize_names: true)
+      return response_with_hash_key
     end
 
     # 
