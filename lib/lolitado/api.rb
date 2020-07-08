@@ -37,6 +37,7 @@ module Lolitado
       end
       finish = Time.now
       msecs = (finish - start) * 1000.0
+      clear_headers
       # puts "RESPONSE - #{msecs}"
       return self.format_response(response, msecs)
     end 
@@ -58,6 +59,13 @@ module Lolitado
     def self.new_headers
       return @new_headers
     end
+
+    #
+    # clear headers
+    #
+    def self.clear_headers
+      API.new_headers.clear unless API.new_headers.nil?
+    end
   end
 
   class Graph < API
@@ -71,7 +79,7 @@ module Lolitado
     # @param variables [String] input variables for graph query using
     #
     def self.request query, variables = false
-      super(:post, '/', generate_body(query, variables))
+      super(:post, '', generate_body(query, variables))
     end
 
     #
@@ -103,7 +111,8 @@ module Lolitado
       body = {}
       body['query'] = query
       if variables
-        if query.include?('$input')
+        variable_indices = query.enum_for(:scan, /(?=\$.*:)/).map { Regexp.last_match.offset(0).first }
+        if query.include?('$input') && variable_indices.to_a.length == 1
           body['variables'] = {'input'=>variables}
         else
           body['variables'] = variables
