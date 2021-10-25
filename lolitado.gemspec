@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.files = `git ls-files`.split("\n")
   s.license = 'MIT'
   s.require_paths = ["lib"]
-  s.add_dependency "sequel", "~> 4.37"
+  s.add_dependency "sequel", "~> 5.49.0"
   s.add_dependency "net-ssh-gateway", "~> 1.2"
   s.add_dependency "httparty", "~> 0.14"
   s.add_dependency "rbnacl-libsodium", "~> 1.0.10"
